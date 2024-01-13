@@ -21,7 +21,18 @@ const FormSchema = z.object({
 const UpdateInvoice = FormSchema.omit({});
 const CreateInvoice = FormSchema.omit({});
 
-export async function deleteExpense(id: number) {}
+export async function deleteExpense(id: number, group_id: number) {
+    // TODO make URL dynamic
+    await fetch(`http://localhost:8080/expenses/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+    });
+
+    revalidatePath(`/groups/${group_id}`);
+}
 
 export type State = {
     expense_id: number;

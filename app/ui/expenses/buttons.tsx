@@ -25,8 +25,8 @@ export function UpdateExpense({ id }: { id: number }) {
   );
 }
 
-export function DeleteExpense({ id }: { id: number }) {
-  const deleteExpenseWithId = deleteExpense.bind(null, id);
+export function DeleteExpense({ id, group_id }: { id: number, group_id: number }) {
+  const deleteExpenseWithId = deleteExpense.bind(null, id, group_id);
   return (
     <>
     <form action={deleteExpenseWithId}>
