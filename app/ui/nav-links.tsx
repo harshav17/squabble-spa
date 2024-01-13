@@ -44,7 +44,7 @@ export default function NavLinks({
           </Link>
         );
       })}
-      {groups.map((group) => {
+      {groups && groups.map((group) => {
         return (
           <Link
             key={group.group_id}

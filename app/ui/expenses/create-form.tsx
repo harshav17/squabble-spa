@@ -1,22 +1,22 @@
 'use client';
 
-import { Expense, Member } from "@/app/lib/definitions";
-import { getMemberId } from "@/app/lib/utils";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { createExpense } from "@/app/lib/actions";
+import { Member, SplitType } from "@/app/lib/definitions";
 import { formatDatetimeForInput } from "@/app/lib/utils";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { updateExpense } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 
-export default function EditExpenseForm({
-    expense,
+
+export default function CreateExpenseForm({
+    group_id,
     members,
+    splitTypes
 }: {
-    expense: Expense;
+    group_id: number;
     members: Member[];
+    splitTypes: SplitType[];
 }) {
-    const initialState = { expense_id: expense.expense_id, group_id: expense.group_id, message: "", errors: {}};
-    const [state, dispatch] = useFormState(updateExpense, initialState);
+    const initialState = { group_id: group_id, expense_id: 0, message: "", errors: {}};
+    const [state, dispatch] = useFormState(createExpense, initialState);
     return (
         <form action={dispatch}>
             <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -30,18 +30,16 @@ export default function EditExpenseForm({
                         id="paidBy"
                         name="paidBy"
                         className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                        defaultValue={expense.expense_id}
                         >
-                        <option value={getMemberId(expense.paid_by, expense.group_id)} disabled>
+                        <option value="" disabled>
                             Paid By
                         </option>
                         {members.map((member) => (
-                            <option key={getMemberId(member.user_id, member.group_id)} value={member.user_id}>
+                            <option key={member.user_id} value={member.user_id}>
                             {member.user?.name}
                             </option>
                         ))}
                         </select>
-                        <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
                     </div>
                 </div>
 
@@ -57,7 +55,6 @@ export default function EditExpenseForm({
                         step="0.01"
                         className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
                         placeholder="Amount"
-                        defaultValue={expense.amount}
                     />
                     <div id="amount-error" aria-live="polite" aria-atomic="true">
                         {state.errors?.amount && 
@@ -70,7 +67,7 @@ export default function EditExpenseForm({
                     </div>
                 </div>
 
-                {/* Timestamp */}
+                {/* Timestamp TODO validate dates */}
                 <div className="mb-4">
                     <label htmlFor="timestamp" className="mb-2 block text-sm font-medium">
                         Date
@@ -81,7 +78,6 @@ export default function EditExpenseForm({
                         name="timestamp"
                         className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
                         placeholder="Date"
-                        defaultValue={formatDatetimeForInput(expense.timestamp)}
                     />
                 </div>
 
@@ -96,19 +92,45 @@ export default function EditExpenseForm({
                         name="description"
                         className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
                         placeholder="Description"
-                        defaultValue={expense.description}
                     />
                 </div>
 
-                {/* Submit */}
-                <div className="flex justify-end gap-2">
-                    <button
-                        type="submit"
-                        className="rounded-md border p-2 hover:bg-gray-100"
-                    >
-                        <span>Update</span>
-                    </button>
+                {/* split types */}
+                <div className="mb-4">
+                    <label htmlFor="splitType" className="mb-2 block text-sm font-medium">
+                        Split Type
+                    </label>
+                    <div className="relative">
+                        <select
+                        id="splitType"
+                        name="splitType"
+                        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        >
+                        <option value="" disabled>
+                            Split Type
+                        </option>
+                        {splitTypes.map((splitType) => (
+                            <option key={splitType.split_type_id} value={splitType.split_type_id}>
+                            {splitType.type_name}
+                            </option>
+                        ))}
+                        </select>
+                    </div>
                 </div>
+
+                {state.message && (
+                    <p className='mt-2 text-sm text-red-500'>
+                    {state.message}
+                    </p>
+                )}
+            </div>
+            <div className="flex justify-end mt-4">
+                <button
+                    type="submit"
+                    className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                >
+                    Create Expense
+                </button>
             </div>
         </form>
     )

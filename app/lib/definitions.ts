@@ -46,3 +46,10 @@ export type MemberResponse = {
     group_members: Member[];
     n: number;
 }
+
+export type SplitType = {
+    split_type_id: number;
+    type_name: string;
+    description: string;
+    created_at: string;
+}

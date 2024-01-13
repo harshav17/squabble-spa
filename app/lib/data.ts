@@ -1,4 +1,4 @@
-import { Expense, ExpenseResponse, GroupResponse, MemberResponse } from "./definitions";
+import { Expense, ExpenseResponse, GroupResponse, MemberResponse, SplitType } from "./definitions";
 import { unstable_noStore as nostore } from 'next/cache';
 
 export async function fetchGroups(query: string) {
@@ -50,5 +50,18 @@ export async function fetchGroupMembers(groupID: string) {
         },
     });
     const data: MemberResponse = await response.json();
+    return data;
+}
+
+export async function fetchAllSplitTypes() {
+    nostore();
+
+    const response = await fetch(`http://localhost:8080/split_types`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+    });
+    const data: SplitType[] = await response.json();
     return data;
 }
