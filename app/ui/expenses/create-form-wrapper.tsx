@@ -4,7 +4,7 @@ import { fetchGroupMembers } from "@/app/lib/data";
 import CreateExpenseForm from "./create-form";
 import { useEffect, useState } from "react";
 import { Group, Member, SplitType } from "@/app/lib/definitions";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/ui/components/ui/select";
 
 export default function CreateExpenseFormWrapper({
     groups,
