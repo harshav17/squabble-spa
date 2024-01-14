@@ -4,6 +4,7 @@ import { fetchGroupMembers } from "@/app/lib/data";
 import CreateExpenseForm from "./create-form";
 import { useEffect, useState } from "react";
 import { Group, Member, SplitType } from "@/app/lib/definitions";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 
 export default function CreateExpenseFormWrapper({
     groups,
@@ -27,15 +28,16 @@ export default function CreateExpenseFormWrapper({
     return (
         <div>
             {/* add a picklist for groups */}
-            <div>
-                <select value={selectedGroup} onChange={(e) => setSelectedGroup(e.target.value)}>
+            <Select onValueChange={(val) => setSelectedGroup(val)} defaultValue={selectedGroup}>
+                <SelectTrigger className="mb-4 w-[180px]">
+                    <SelectValue placeholder="Theme" />
+                </SelectTrigger>
+                <SelectContent>
                     {groups.map((group) => (
-                        <option key={group.group_id} value={group.group_id}>
-                            {group.group_name}
-                        </option>
+                        <SelectItem key={group.group_id} value={String(group.group_id)}>{group.group_name}</SelectItem>
                     ))}
-                </select>
-            </div>
+                </SelectContent>
+            </Select>
             <CreateExpenseForm group_id={Number(selectedGroup)} members={members} splitTypes={splitTypes} />
         </div>
     )
