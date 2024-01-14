@@ -1,4 +1,4 @@
-import { Expense, ExpenseResponse, GroupResponse, MemberResponse, SplitType } from "./definitions";
+import { Balance, Expense, ExpenseResponse, GroupResponse, MemberResponse, SplitType } from "./definitions";
 import { unstable_noStore as nostore } from 'next/cache';
 
 export async function fetchGroups(query: string) {
@@ -50,6 +50,19 @@ export async function fetchGroupMembers(groupID: string) {
         },
     });
     const data: MemberResponse = await response.json();
+    return data;
+}
+
+export async function fetchGroupBalances(groupID: string) {
+    nostore();
+
+    const response = await fetch(`http://localhost:8080/groups/${groupID}/balances`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+    });
+    const data: Balance[] = await response.json();
     return data;
 }
 

@@ -23,6 +23,8 @@ export type Expense = {
     updated_at: string;
     created_by: string;
     updated_by: string;
+
+    paid_by_user?: User;
 }
 
 export type ExpenseResponse = {
@@ -52,4 +54,10 @@ export type SplitType = {
     type_name: string;
     description: string;
     created_at: string;
+}
+
+export type Balance = {
+    user_id: string;
+    group_id: number;
+    amount: number;
 }

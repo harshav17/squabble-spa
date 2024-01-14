@@ -56,6 +56,9 @@ export default async function ExpensesTable({
                 <th scope="col" className="px-3 py-5 font-medium">
                   Description
                 </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Paid By
+                </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
                 </th>
@@ -77,6 +80,9 @@ export default async function ExpensesTable({
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {expense.description}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {expense.paid_by_user?.name}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
