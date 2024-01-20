@@ -2,13 +2,12 @@
 
 import {
   UserGroupIcon,
-  HomeIcon,
-  DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Group } from '../lib/definitions';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
@@ -24,6 +23,7 @@ export default function NavLinks({
   groups: Group[]
 }) {
   const pathname = usePathname();
+  const { user } = useUser();
   return (
     <>
       {links.map((link) => {
@@ -61,6 +61,23 @@ export default function NavLinks({
           </Link>
         );
       })}
+      {user ? (
+              <>
+                <li>
+                  <a href="/api/auth/logout" data-testid="logout">
+                    Logout
+                  </a>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <a href="/api/auth/login" data-testid="login">
+                    Login
+                  </a>
+                </li>
+              </>
+            )}
     </>
   );
 }
