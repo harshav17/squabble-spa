@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  PowerIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -61,21 +62,18 @@ export default function NavLinks({
           </Link>
         );
       })}
+      <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
       {user ? (
               <>
-                <li>
-                  <a href="/api/auth/logout" data-testid="logout">
+                <a href="/api/auth/logout" data-testid="logout" className='flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'>
                     Logout
-                  </a>
-                </li>
+                </a>
               </>
             ) : (
               <>
-                <li>
-                  <a href="/api/auth/login" data-testid="login">
+                <a href="/api/auth/login" data-testid="login" className='flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'>
                     Login
-                  </a>
-                </li>
+                </a>
               </>
             )}
     </>
