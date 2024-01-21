@@ -1,12 +1,10 @@
 import Breadcrumbs from '@/app/ui//breadcrumbs';
-import { fetchAllSplitTypes, fetchExpenseByID, fetchGroupMembers, fetchGroups } from '@/app/lib/data';
-import { CreateExpense } from '@/app/ui/expenses/buttons';
-import CreateExpenseForm from '@/app/ui/expenses/create-form';
-import { useEffect, useState } from 'react';
-import { Member, SplitType } from '@/app/lib/definitions';
+import { fetchAllSplitTypes, fetchGroups } from '@/app/lib/data';
+import { SplitType } from '@/app/lib/definitions';
 import CreateExpenseFormWrapper from '@/app/ui/expenses/create-form-wrapper';
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
  
-export default async function Page() {
+export default withPageAuthRequired(async function Page() {
     const groupsRes = await fetchGroups("");
     const groups = groupsRes.expenseGroups;
 
@@ -25,4 +23,4 @@ export default async function Page() {
             <CreateExpenseFormWrapper groups={groups} splitTypes={splitTypes} />
         </main>
     );
-}
+});

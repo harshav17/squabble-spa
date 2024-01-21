@@ -15,7 +15,7 @@ export default function CreateExpenseFormWrapper({
 }) {
     // TODO - choose between number and string
     const [selectedGroup, setSelectedGroup] = useState(String(groups[0].group_id));
-    const [members, setMembers] = useState<Member[] | undefined>([]);
+    const [members, setMembers] = useState<Member[]>([]);
 
     useEffect(() => {
         const fetchMembers = async () => {

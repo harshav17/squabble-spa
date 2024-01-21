@@ -2,7 +2,6 @@
 
 import { createExpense } from "@/app/lib/actions";
 import { Member, SplitType } from "@/app/lib/definitions";
-import { formatDatetimeForInput } from "@/app/lib/utils";
 import { useFormState } from "react-dom";
 
 
@@ -12,7 +11,7 @@ export default function CreateExpenseForm({
     splitTypes
 }: {
     group_id: number;
-    members: Member[] | undefined;
+    members: Member[];
     splitTypes: SplitType[];
 }) {
     const initialState = { group_id: group_id, expense_id: 0, message: "", errors: {}};

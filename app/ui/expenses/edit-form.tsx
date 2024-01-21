@@ -1,10 +1,8 @@
 'use client';
 
 import { Expense, Member } from "@/app/lib/definitions";
-import { getMemberId } from "@/app/lib/utils";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { formatDatetimeForInput } from "@/app/lib/utils";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { updateExpense } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 
@@ -30,13 +28,13 @@ export default function EditExpenseForm({
                         id="paidBy"
                         name="paidBy"
                         className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                        defaultValue={expense.expense_id}
+                        defaultValue={expense.paid_by}
                         >
-                        <option value={getMemberId(expense.paid_by, expense.group_id)} disabled>
+                        <option value="" disabled>
                             Paid By
                         </option>
                         {members.map((member) => (
-                            <option key={getMemberId(member.user_id, member.group_id)} value={member.user_id}>
+                            <option key={member.user_id} value={member.user_id}>
                             {member.user?.name}
                             </option>
                         ))}

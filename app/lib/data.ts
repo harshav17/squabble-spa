@@ -8,15 +8,11 @@ export async function fetchGroups(query: string) {
     nostore();
 
     const session = await getSession();
-    if (!session) {
-        return null;
-    }
-
     const response = await fetch('http://localhost:8080/groups', {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session.accessToken}`,
+            'Authorization': `Bearer ${session?.accessToken}`,
         },
     });
     const data: GroupResponse = await response.json();
@@ -27,15 +23,11 @@ export async function fetchExpenses(groupID: string) {
     nostore();
 
     const session = await getSession();
-    if (!session) {
-        return null;
-    }
-
     const response = await fetch(`http://localhost:8080/groups/${groupID}/expenses`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session.accessToken}`,
+            'Authorization': `Bearer ${session?.accessToken}`,
         },
     });
     const data: ExpenseResponse = await response.json();
@@ -46,15 +38,11 @@ export async function fetchExpenseByID(expenseID: string) {
     nostore();
 
     const session = await getSession();
-    if (!session) {
-        return null;
-    }
-
     const response = await fetch(`http://localhost:8080/expenses/${expenseID}`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session.accessToken}`,
+            'Authorization': `Bearer ${session?.accessToken}`,
         },
     });
     const data: Expense = await response.json();
@@ -65,15 +53,11 @@ export async function fetchGroupMembers(groupID: string) {
     nostore();
 
     const session = await getSession();
-    if (!session) {
-        return null;
-    }
-
     const response = await fetch(`http://localhost:8080/groups/${groupID}/members`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session.accessToken}`,
+            'Authorization': `Bearer ${session?.accessToken}`,
         },
     });
     const data: MemberResponse = await response.json();
@@ -84,15 +68,11 @@ export async function fetchGroupBalances(groupID: string) {
     nostore();
 
     const session = await getSession();
-    if (!session) {
-        return null;
-    }
-
     const response = await fetch(`http://localhost:8080/groups/${groupID}/balances`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session.accessToken}`,
+            'Authorization': `Bearer ${session?.accessToken}`,
         },
     });
     const data: Balance[] = await response.json();
@@ -103,15 +83,11 @@ export async function fetchAllSplitTypes() {
     nostore();
 
     const session = await getSession();
-    if (!session) {
-        return null;
-    }
-
     const response = await fetch(`http://localhost:8080/split_types`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session.accessToken}`,
+            'Authorization': `Bearer ${session?.accessToken}`,
         },
     });
     const data: SplitType[] = await response.json();

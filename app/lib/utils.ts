@@ -65,7 +65,3 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
-
-export const getMemberId = (userID: string, groupID: number) => {
-  return `${userID}-${groupID}`;
-}
