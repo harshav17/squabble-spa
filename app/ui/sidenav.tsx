@@ -6,7 +6,7 @@ import { fetchGroups } from '../lib/data';
 
 export default async function SideNav() {
   const groupsRes = await fetchGroups("");
-  const groups = groupsRes.expenseGroups;
+  const groups = groupsRes?.expenseGroups;
 
   return (
     <div id="sidenav" className="flex h-full flex-col px-3 py-4 md:px-2">

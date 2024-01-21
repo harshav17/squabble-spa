@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { split } from 'postcss/lib/list';
+import { getSession } from '@auth0/nextjs-auth0';
 
 const FormSchema = z.object({
     paidBy: z.string({
@@ -22,12 +22,17 @@ const UpdateInvoice = FormSchema.omit({});
 const CreateInvoice = FormSchema.omit({});
 
 export async function deleteExpense(id: number, group_id: number) {
-    // TODO make URL dynamic
+    const session = await getSession();
+    if (!session) {
+        return null;
+    }
+
     await fetch(`http://localhost:8080/expenses/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization': `Bearer ${session.accessToken}`,
         },
     });
 
@@ -44,6 +49,8 @@ export type State = {
     split_type_id?: number;
 };
 export async function updateExpense(prevState: State, formData: FormData): Promise<State> {
+    const session = await getSession();
+    
     const validatedFields = UpdateInvoice.safeParse({
         amount: formData.get('amount'),
         description: formData.get('description'),
@@ -70,6 +77,7 @@ export async function updateExpense(prevState: State, formData: FormData): Promi
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization': `Bearer ${session?.accessToken}`,
         },
         body: JSON.stringify({
             paid_by: paidBy,
@@ -84,6 +92,8 @@ export async function updateExpense(prevState: State, formData: FormData): Promi
 }
 
 export async function createExpense(prevState: State, formData: FormData): Promise<State> {
+    const session = await getSession();
+
     const validatedFields = CreateInvoice.safeParse({
         paidBy: formData.get('paidBy'),
         amount: formData.get('amount'),
@@ -111,6 +121,7 @@ export async function createExpense(prevState: State, formData: FormData): Promi
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Authorization': `Bearer ${session?.accessToken}`,
         },
         body: JSON.stringify({
             paid_by: paidBy,

@@ -21,7 +21,7 @@ const links: {
 export default function NavLinks({
   groups,
 }: {
-  groups: Group[]
+  groups?: Group[]
 }) {
   const pathname = usePathname();
   const { user } = useUser();

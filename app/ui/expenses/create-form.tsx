@@ -12,7 +12,7 @@ export default function CreateExpenseForm({
     splitTypes
 }: {
     group_id: number;
-    members: Member[];
+    members: Member[] | undefined;
     splitTypes: SplitType[];
 }) {
     const initialState = { group_id: group_id, expense_id: 0, message: "", errors: {}};
@@ -34,7 +34,7 @@ export default function CreateExpenseForm({
                         <option value="" disabled>
                             Paid By
                         </option>
-                        {members.map((member) => (
+                        {members && members.map((member) => (
                             <option key={member.user_id} value={member.user_id}>
                             {member.user?.name}
                             </option>
