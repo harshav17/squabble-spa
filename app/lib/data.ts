@@ -8,7 +8,7 @@ export async function fetchGroups(query: string) {
     nostore();
 
     const session = await getSession();
-    const response = await fetch('http://localhost:8080/groups', {
+    const response = await fetch(`${process.env.AUTH0_AUDIENCE}/groups`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -23,7 +23,7 @@ export async function fetchExpenses(groupID: string) {
     nostore();
 
     const session = await getSession();
-    const response = await fetch(`http://localhost:8080/groups/${groupID}/expenses`, {
+    const response = await fetch(`${process.env.AUTH0_AUDIENCE}/groups/${groupID}/expenses`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -38,7 +38,7 @@ export async function fetchExpenseByID(expenseID: string) {
     nostore();
 
     const session = await getSession();
-    const response = await fetch(`http://localhost:8080/expenses/${expenseID}`, {
+    const response = await fetch(`${process.env.AUTH0_AUDIENCE}/expenses/${expenseID}`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -53,7 +53,7 @@ export async function fetchGroupMembers(groupID: string) {
     nostore();
 
     const session = await getSession();
-    const response = await fetch(`http://localhost:8080/groups/${groupID}/members`, {
+    const response = await fetch(`${process.env.AUTH0_AUDIENCE}/groups/${groupID}/members`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -68,7 +68,7 @@ export async function fetchGroupBalances(groupID: string) {
     nostore();
 
     const session = await getSession();
-    const response = await fetch(`http://localhost:8080/groups/${groupID}/balances`, {
+    const response = await fetch(`${process.env.AUTH0_AUDIENCE}/groups/${groupID}/balances`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -83,7 +83,7 @@ export async function fetchAllSplitTypes() {
     nostore();
 
     const session = await getSession();
-    const response = await fetch(`http://localhost:8080/split_types`, {
+    const response = await fetch(`${process.env.AUTH0_AUDIENCE}/split_types`, {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',

@@ -27,7 +27,7 @@ export async function deleteExpense(id: number, group_id: number) {
         return null;
     }
 
-    await fetch(`http://localhost:8080/expenses/${id}`, {
+    await fetch(`${process.env.AUTH0_AUDIENCE}/expenses/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export async function updateExpense(prevState: State, formData: FormData): Promi
     // Convert timestamp to ISO 8601 format
     const timestampISO = new Date(timestamp).toISOString();
 
-    await fetch(`http://localhost:8080/expenses/${prevState.expense_id}`, {
+    await fetch(`${process.env.AUTH0_AUDIENCE}/expenses/${prevState.expense_id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ export async function createExpense(prevState: State, formData: FormData): Promi
     // Convert timestamp to ISO 8601 format
     const timestampISO = new Date(timestamp).toISOString();
 
-    const res = await fetch(`http://localhost:8080/expenses`, {
+    const res = await fetch(`${process.env.AUTH0_AUDIENCE}/expenses`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
