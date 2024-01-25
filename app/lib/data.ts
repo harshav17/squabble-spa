@@ -15,7 +15,6 @@ export async function fetchGroups(query: string) {
             'Authorization': `Bearer ${session?.accessToken}`,
         },
     });
-    console.log("log access token", session?.accessToken)
     const data: GroupResponse = await response.json();
     return data;
 }
