@@ -21,7 +21,9 @@ export default withPageAuthRequired(
                     },
                     ]}
                 />
-                <EditExpenseForm expense={expense} members={members} />
+                { expense && members && (
+                    <EditExpenseForm expense={expense} members={members} />
+                )}
             </main>
         );
     }

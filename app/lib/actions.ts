@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getSession } from '@auth0/nextjs-auth0';
+import { ExpenseParticipant } from './definitions';
 
 const FormSchema = z.object({
     paidBy: z.string({
@@ -15,10 +16,11 @@ const FormSchema = z.object({
     }),
     description: z.string(),
     timestamp: z.string(),
-    splitType: z.coerce.number()
+    splitType: z.coerce.number(),
+    participants: z.array(z.string()),
 });
 
-const UpdateInvoice = FormSchema.omit({});
+const UpdateInvoice = FormSchema.omit({splitType: true});
 const CreateInvoice = FormSchema.omit({});
 
 export async function deleteExpense(id: number, group_id: number) {
@@ -50,12 +52,15 @@ export type State = {
 };
 export async function updateExpense(prevState: State, formData: FormData): Promise<State> {
     const session = await getSession();
+
+    const participants = formData.getAll('participants');
     
     const validatedFields = UpdateInvoice.safeParse({
         amount: formData.get('amount'),
         description: formData.get('description'),
         paidBy: formData.get('paidBy'),
         timestamp: formData.get('timestamp'),
+        participants: participants,
     });
 
     if (!validatedFields.success) {
@@ -72,6 +77,17 @@ export async function updateExpense(prevState: State, formData: FormData): Promi
     // Convert timestamp to ISO 8601 format
     const timestampISO = new Date(timestamp).toISOString();
 
+    // create ExpenseParticipants
+    const expenseParticipants: ExpenseParticipant[] = participants.map((participant) => {
+        return {
+            user_id: participant.toString(),
+            expense_id: prevState.expense_id,
+            amount_owed: 0,
+            share_percentage: 0,
+            Note: '',
+        };
+    });
+
     await fetch(`${process.env.AUTH0_AUDIENCE}/expenses/${prevState.expense_id}`, {
         method: 'PATCH',
         headers: {
@@ -84,6 +100,7 @@ export async function updateExpense(prevState: State, formData: FormData): Promi
             amount: amount,
             description: description,
             timestamp: timestampISO,
+            participants: expenseParticipants,
         }),
     });
 

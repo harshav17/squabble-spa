@@ -25,6 +25,7 @@ export type Expense = {
     updated_by: string;
 
     paid_by_user?: User;
+    participants?: ExpenseParticipant[];
 }
 
 export type ExpenseResponse = {
@@ -60,4 +61,12 @@ export type Balance = {
     user_id: string;
     group_id: number;
     amount: number;
+}
+
+export type ExpenseParticipant = {
+    expense_id: number;
+    user_id: string;
+    amount_owed: number;
+    share_percentage: number;
+    Note: string;
 }
