@@ -11,7 +11,7 @@ export async function fetchGroups(query: string) {
     if(!userId){
         // TODO throw new Error('You must be signed in to fetch groups.'); after dashboard vs marketing pages are separated
         return {
-            groups: [],
+            expenseGroups: [],
             n: 0
         };
     }
