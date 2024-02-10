@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Group } from '../lib/definitions';
 import { useUser } from "@clerk/nextjs";
+import { CreateGroup } from './groups/buttons';
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
@@ -64,6 +65,7 @@ export default function NavLinks({
           </Link>
         );
       })}
+      <CreateGroup />
       <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
       {isSignedIn ? (
               <>

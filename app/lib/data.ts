@@ -9,7 +9,11 @@ export async function fetchGroups(query: string) {
 
     const {userId, getToken} = auth();
     if(!userId){
-        throw new Error('You must be signed in to fetch groups.');
+        // TODO throw new Error('You must be signed in to fetch groups.'); after dashboard vs marketing pages are separated
+        return {
+            groups: [],
+            n: 0
+        };
     }
     const token = await getToken();
 

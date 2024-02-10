@@ -173,3 +173,58 @@ export async function createExpense(prevState: State, formData: FormData): Promi
     revalidatePath(`/groups/${prevState.group_id}`);
     redirect(`/groups/${prevState.group_id}`);
 }
+
+const GroupSchema = z.object({
+    name: z.string().min(1),
+    description: z.string(),
+    members: z.array(z.string()),
+});
+const CreateGroup = GroupSchema.omit({});
+export type GroupState = {
+    errors?: {
+        name?: string[];
+    };
+    message?: string | null;
+};
+
+export async function createGroup(prevState: GroupState, formData: FormData): Promise<GroupState> {
+    const { userId, getToken } = auth();
+    if (!userId) {
+      throw new Error('You must be signed in to add an item to your cart');
+    }
+    const token = await getToken();
+
+    const members = formData.getAll('members');
+    const validatedFields = CreateGroup.safeParse({
+        name: formData.get('name'),
+        description: formData.get('description'),
+        members: members,
+    });
+
+    if (!validatedFields.success) {
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing fields. Failed to Create Group.'
+        };
+    }
+
+    const { name, description } = validatedFields.data;
+
+    const res = await fetch(`${process.env.AUTH0_AUDIENCE}/groups`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            group_name: name,
+            description: description,
+            members: members,
+        }),
+    });
+
+    const data = await res.json();
+    revalidatePath(`/groups/${data.group_id}`);
+    redirect(`/groups/${data.group_id}`);
+}
