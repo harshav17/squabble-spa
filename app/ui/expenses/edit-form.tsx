@@ -5,6 +5,7 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { formatDatetimeForInput } from "@/app/lib/utils";
 import { updateExpense } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
+import { useEffect, useState } from "react";
 
 export default function EditExpenseForm({
     expense,
@@ -13,6 +14,29 @@ export default function EditExpenseForm({
     expense: Expense;
     members: Member[];
 }) {
+    const [checkedState, setCheckedState] = useState(
+        new Array(members.length).fill(false)
+    );
+
+    useEffect(() => {
+        // Check if there are participants in the expense
+        if (expense.participants && expense.participants.length > 0) {
+            const updatedCheckedState = members.map(member => 
+                expense.participants?.some(participant => 
+                    participant.user_id === member.user_id
+                )
+            );
+            setCheckedState(updatedCheckedState);
+        }
+    }, [members, expense.participants]); // Dependencies for useEffect
+
+    const onChecked = (position: number) => {
+        const updatedCheckedState = checkedState.map((item, index) =>
+            index === position ? !item : item
+        );
+        setCheckedState(updatedCheckedState);
+    }
+
     const initialState = { expense_id: expense.expense_id, group_id: expense.group_id, message: "", errors: {}};
     const [state, dispatch] = useFormState(updateExpense, initialState);
     return (
@@ -33,7 +57,7 @@ export default function EditExpenseForm({
                         <option value="" disabled>
                             Paid By
                         </option>
-                        {members.map((member) => (
+                        {members && members.map((member) => (
                             <option key={member.user_id} value={member.user_id}>
                             {member.user?.name}
                             </option>
@@ -96,6 +120,31 @@ export default function EditExpenseForm({
                         placeholder="Description"
                         defaultValue={expense.description}
                     />
+                </div>
+
+                {/* Participants */}
+                <div className="mb-4 sm:w-1/3">
+                    <fieldset>
+                        <legend className="text-base font-semibold leading-6 text-gray-900">Members</legend>
+                        {members && members.map((member, idx) => (
+                            <div key={member.user_id} className="relative flex items-start py-4">
+                                <div className="min-w-0 flex-1 text-sm leading-6">
+                                    <label htmlFor={member.user_id} className="select-none font-medium text-gray-900">{member.user?.name}</label>
+                                </div>
+                                <div className="ml-3 flex h-6 items-center">
+                                    <input 
+                                        id={member.user_id} 
+                                        value={member.user_id} 
+                                        name="participants" 
+                                        type="checkbox" 
+                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" 
+                                        checked={checkedState[idx]}
+                                        onChange={() => onChecked(idx)}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </fieldset>
                 </div>
 
                 {/* Submit */}
