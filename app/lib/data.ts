@@ -9,11 +9,7 @@ export async function fetchGroups(query: string) {
 
     const {userId, getToken} = auth();
     if(!userId){
-        // return dummy group response
-        return {
-            expenseGroups: [],
-            n: 0
-        };
+        throw new Error('You must be signed in to fetch groups.');
     }
     const token = await getToken();
 
@@ -33,11 +29,7 @@ export async function fetchExpenses(groupID: string) {
 
     const {userId, getToken} = auth();
     if(!userId){
-        // return dummy expense response
-        return {
-            expenses: [],
-            n: 0
-        };
+        throw new Error('You must be signed in to fetch expenses.');
     }
     const token = await getToken();
 
@@ -57,19 +49,7 @@ export async function fetchExpenseByID(expenseID: string) {
 
     const {userId, getToken} = auth();
     if(!userId){
-        // return dummy expense response
-        return {
-            expense_id: 0,
-            group_id: 0,
-            paid_by: "",
-            amount: 0,
-            description: "",
-            timestamp: "",
-            created_at: "",
-            updated_at: "",
-            created_by: "",
-            updated_by: "",
-        };
+        throw new Error('You must be signed in to fetch expense.');
     }
     const token = await getToken();
 
@@ -113,8 +93,7 @@ export async function fetchGroupBalances(groupID: string) {
 
     const {userId, getToken} = auth();
     if(!userId){
-        // return dummy
-        return [];
+        throw new Error('You must be signed in to fetch group balances.');
     }
     const token = await getToken();
 
@@ -134,8 +113,7 @@ export async function fetchAllSplitTypes() {
 
     const {userId, getToken} = auth();
     if(!userId){
-        // return dummy
-        return [];
+        throw new Error('You must be signed in to fetch all splitTypes.');
     }
     const token = await getToken();
 
