@@ -3,8 +3,8 @@
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { getSession } from '@auth0/nextjs-auth0';
 import { ExpenseParticipant } from './definitions';
+import { auth } from '@clerk/nextjs';
 
 const FormSchema = z.object({
     paidBy: z.string({
@@ -21,20 +21,21 @@ const FormSchema = z.object({
 });
 
 const UpdateInvoice = FormSchema.omit({splitType: true});
-const CreateInvoice = FormSchema.omit({});
+const CreateInvoice = FormSchema.omit({participants: true});
 
 export async function deleteExpense(id: number, group_id: number) {
-    const session = await getSession();
-    if (!session) {
-        return null;
+    const { userId, getToken } = auth();
+    if (!userId) {
+      throw new Error('You must be signed in to add an item to your cart');
     }
+    const token = await getToken();
 
     await fetch(`${process.env.AUTH0_AUDIENCE}/expenses/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session.accessToken}`,
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -51,7 +52,11 @@ export type State = {
     split_type_id?: number;
 };
 export async function updateExpense(prevState: State, formData: FormData): Promise<State> {
-    const session = await getSession();
+    const { userId, getToken } = auth();
+    if (!userId) {
+      throw new Error('You must be signed in to add an item to your cart');
+    }
+    const token = await getToken();
 
     const participants = formData.getAll('participants');
     
@@ -93,7 +98,7 @@ export async function updateExpense(prevState: State, formData: FormData): Promi
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session?.accessToken}`,
+            'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
             paid_by: paidBy,
@@ -109,7 +114,11 @@ export async function updateExpense(prevState: State, formData: FormData): Promi
 }
 
 export async function createExpense(prevState: State, formData: FormData): Promise<State> {
-    const session = await getSession();
+    const { userId, getToken } = auth();
+    if (!userId) {
+      throw new Error('You must be signed in to add an item to your cart');
+    }
+    const token = await getToken();
 
     const validatedFields = CreateInvoice.safeParse({
         paidBy: formData.get('paidBy'),
@@ -138,7 +147,7 @@ export async function createExpense(prevState: State, formData: FormData): Promi
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': `Bearer ${session?.accessToken}`,
+            'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
             paid_by: paidBy,

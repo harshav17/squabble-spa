@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Group } from '../lib/definitions';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUser } from "@clerk/nextjs";
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
@@ -24,7 +24,7 @@ export default function NavLinks({
   groups?: Group[]
 }) {
   const pathname = usePathname();
-  const { user } = useUser();
+  const { isSignedIn } = useUser();
   return (
     <>
       {links.map((link) => {
@@ -65,7 +65,7 @@ export default function NavLinks({
         );
       })}
       <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-      {user ? (
+      {isSignedIn ? (
               <>
                 <a href="/api/auth/logout" data-testid="logout" className='flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'>
                     Logout
