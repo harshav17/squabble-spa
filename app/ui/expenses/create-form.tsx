@@ -18,7 +18,7 @@ export default function CreateExpenseForm({
     const [state, dispatch] = useFormState(createExpense, initialState);
     return (
         <form action={dispatch}>
-            <div className="rounded-md bg-gray-50 p-4 md:p-6">
+            <div className="rounded-md bg-gray-900 p-4 md:p-6">
                 {/* Paid By */}
                 <div className="mb-4">
                     <label htmlFor="paidBy" className="mb-2 block text-sm font-medium">
@@ -28,7 +28,7 @@ export default function CreateExpenseForm({
                         <select
                         id="paidBy"
                         name="paidBy"
-                        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full cursor-pointer rounded-md border bg-gray-900 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         >
                         <option value="" disabled>
                             Paid By
@@ -52,7 +52,7 @@ export default function CreateExpenseForm({
                         id="amount"
                         name="amount"
                         step="0.01"
-                        className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
+                        className="block w-full rounded-md border bg-gray-900 py-2 text-sm pl-4"
                         placeholder="Amount"
                     />
                     <div id="amount-error" aria-live="polite" aria-atomic="true">
@@ -75,7 +75,7 @@ export default function CreateExpenseForm({
                         type="datetime-local"
                         id="timestamp"
                         name="timestamp"
-                        className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
+                        className="block w-full rounded-md border bg-gray-900 py-2 text-sm pl-4"
                         placeholder="Date"
                     />
                 </div>
@@ -89,7 +89,7 @@ export default function CreateExpenseForm({
                         type="text"
                         id="description"
                         name="description"
-                        className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
+                        className="block w-full rounded-md border bg-gray-900 py-2 text-sm pl-4"
                         placeholder="Description"
                     />
                 </div>
@@ -103,7 +103,7 @@ export default function CreateExpenseForm({
                         <select
                         id="splitType"
                         name="splitType"
-                        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full cursor-pointer rounded-md border bg-gray-900 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         >
                         <option value="" disabled>
                             Split Type

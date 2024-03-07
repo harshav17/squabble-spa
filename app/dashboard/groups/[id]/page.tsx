@@ -9,7 +9,9 @@ export default async function Page({ params }: any) {
             <div className="mt-4 flex items-center justify-between gap-2">
                 <CreateExpense />
             </div>
-            <Balances groupID={id} />
+            <div className="md:w-1/2">
+                <Balances groupID={id} />
+            </div>
             <ExpensesTable groupID={id} currentPage={1} />
         </div>
     )
