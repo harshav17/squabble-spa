@@ -3,17 +3,17 @@ import CreateGroupForm from "@/app/ui/groups/create-form";
 
 export default async function Page() {
     return (
-        <main>
+        <>
             <Breadcrumbs
                 breadcrumbs={[
                     {
                         label: 'Create Group',
-                        href: '/groups/create',
+                        href: '/dashboard/groups/create',
                         active: true,
                     },
                 ]}
             />
             <CreateGroupForm members={[]}/>
-        </main>
+        </>
     )
 }

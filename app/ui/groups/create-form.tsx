@@ -13,7 +13,7 @@ export default function CreateGroupForm({
     const [state, dispatch] = useFormState(createGroup, initialState);
     return (
         <form action={dispatch}>
-            <div className="rounded-md bg-gray-50 p-4 md:p-6">
+            <div className="rounded-md bg-gray-900 p-4 md:p-6">
                 <div className="mb-4">
                     <label htmlFor="name" className="mb-2 block text-sm font-medium">
                         Group Name

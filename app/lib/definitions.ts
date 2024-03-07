@@ -70,3 +70,10 @@ export type ExpenseParticipant = {
     share_percentage: number;
     Note: string;
 }
+
+export type NavLink = {
+    name: string;
+    href: string;
+    icon: React.ComponentType<React.ComponentProps<'svg'>>;
+    current: boolean;
+}

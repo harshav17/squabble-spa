@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Group } from '../lib/definitions';
-import { useUser } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import { CreateGroup } from './groups/buttons';
 
 // Map of links to display in the side navigation.
@@ -52,7 +52,7 @@ export default function NavLinks({
         return (
           <Link
             key={group.group_id}
-            href={`/groups/${group.group_id}`}
+            href={`/dashboard/groups/${group.group_id}`}
             className={clsx(
               "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
               {
@@ -67,19 +67,7 @@ export default function NavLinks({
       })}
       <CreateGroup />
       <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-      {isSignedIn ? (
-              <>
-                <a href="/api/auth/logout" data-testid="logout" className='flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'>
-                    Logout
-                </a>
-              </>
-            ) : (
-              <>
-                <a href="/api/auth/login" data-testid="login" className='flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3'>
-                    Login
-                </a>
-              </>
-            )}
+      <UserButton />
     </>
   );
 }

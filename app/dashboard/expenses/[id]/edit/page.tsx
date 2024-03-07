@@ -19,10 +19,10 @@ export default async function Page({ params }: any) {
         <main>
             <Breadcrumbs
                 breadcrumbs={[
-                { label: `Group ${expense.group_id}`, href: `/groups/${expense.group_id}` },
+                { label: `Group ${expense.group_id}`, href: `/dashboard/groups/${expense.group_id}` },
                 {
                     label: 'Edit Expense',
-                    href: `/expenses/${id}/edit`,
+                    href: `/dashboard/expenses/${id}/edit`,
                     active: true,
                 },
                 ]}

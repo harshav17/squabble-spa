@@ -15,7 +15,7 @@ export default function BalanceAvatar({ member, balances }: { member: Member, ba
             </Avatar>
             <div className="min-w-0 flex-1">
                 <a href="#" className="focus:outline-none">
-                    <p className="text-sm font-medium text-gray-900">{member.user?.name}</p>
+                    <p className="text-sm font-medium text-gray-300">{member.user?.name}</p>
                     <p className={clsx('"truncate text-sm text-gray-500"', {
                         'text-green-500': amount && amount >= 0,
                         'text-orange-500': amount && amount < 0,
