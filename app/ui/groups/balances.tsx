@@ -11,12 +11,12 @@ export default async function Balances({ groupID }: { groupID: string }) {
     const balRes = await fetchGroupBalances(groupID);
     
     return (
-        <Card className="mt-3">
-            <CardHeader className="border-gray-200 border-b-2">
-                <CardTitle>Group Balances</CardTitle>
-                <CardDescription>Who owes what</CardDescription>
+        <Card className="m-2 p-3 bg-gray-900">
+            <CardHeader className="border-b-2 border-gray-800 p-3">
+                <CardTitle className="text-gray-300">Group Balances</CardTitle>
+                <CardDescription className="text-gray-400">Who owes what</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3">
                 { members?.map((member) => (
                     <BalanceAvatar key={member.user_id} member={member} balances={balRes} />
                 ))}

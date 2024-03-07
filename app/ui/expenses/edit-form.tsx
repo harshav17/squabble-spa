@@ -41,7 +41,7 @@ export default function EditExpenseForm({
     const [state, dispatch] = useFormState(updateExpense, initialState);
     return (
         <form action={dispatch}>
-            <div className="rounded-md bg-gray-50 p-4 md:p-6">
+            <div className="rounded-md bg-gray-800 p-4 md:p-6">
                 {/* Paid By */}
                 <div className="mb-4">
                     <label htmlFor="paidBy" className="mb-2 block text-sm font-medium">
@@ -51,7 +51,7 @@ export default function EditExpenseForm({
                         <select
                         id="paidBy"
                         name="paidBy"
-                        className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                        className="peer block w-full cursor-pointer rounded-md border bg-gray-900 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                         defaultValue={expense.paid_by}
                         >
                         <option value="" disabled>
@@ -77,7 +77,7 @@ export default function EditExpenseForm({
                         id="amount"
                         name="amount"
                         step="0.01"
-                        className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
+                        className="block w-full rounded-md border bg-gray-900 py-2 text-sm pl-4"
                         placeholder="Amount"
                         defaultValue={expense.amount}
                     />
@@ -101,7 +101,7 @@ export default function EditExpenseForm({
                         type="datetime-local"
                         id="timestamp"
                         name="timestamp"
-                        className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
+                        className="block w-full rounded-md border bg-gray-900 py-2 text-sm pl-4"
                         placeholder="Date"
                         defaultValue={formatDatetimeForInput(expense.timestamp)}
                     />
@@ -116,7 +116,7 @@ export default function EditExpenseForm({
                         type="text"
                         id="description"
                         name="description"
-                        className="block w-full rounded-md border border-gray-200 py-2 text-sm pl-4"
+                        className="block w-full rounded-md border bg-gray-900 py-2 text-sm pl-4"
                         placeholder="Description"
                         defaultValue={expense.description}
                     />
@@ -125,11 +125,11 @@ export default function EditExpenseForm({
                 {/* Participants */}
                 <div className="mb-4 sm:w-1/3">
                     <fieldset>
-                        <legend className="text-base font-semibold leading-6 text-gray-900">Members</legend>
+                        <legend className="text-base font-semibold leading-6 text-gray-300">Members</legend>
                         {members && members.map((member, idx) => (
                             <div key={member.user_id} className="relative flex items-start py-4">
                                 <div className="min-w-0 flex-1 text-sm leading-6">
-                                    <label htmlFor={member.user_id} className="select-none font-medium text-gray-900">{member.user?.name}</label>
+                                    <label htmlFor={member.user_id} className="select-none font-medium text-gray-300">{member.user?.name}</label>
                                 </div>
                                 <div className="ml-3 flex h-6 items-center">
                                     <input 
@@ -151,7 +151,7 @@ export default function EditExpenseForm({
                 <div className="flex justify-end gap-2">
                     <button
                         type="submit"
-                        className="rounded-md border p-2 hover:bg-gray-100"
+                        className="rounded-md border p-2 border-gray-500 hover:bg-gray-700"
                     >
                         <span>Update</span>
                     </button>
